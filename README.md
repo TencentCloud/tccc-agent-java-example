@@ -7,4 +7,4 @@
 
 ## 其他
 腾讯云呼叫中心目前支持ios、Windows、Android、macos，如在使用上遇到问题可联系我们。
-[](https://qcloudimg.tencent-cloud.cn/raw/a15d144dd69983bfde2bcd41b0b64b75.png)
+![](https://qcloudimg.tencent-cloud.cn/raw/a15d144dd69983bfde2bcd41b0b64b75.png)

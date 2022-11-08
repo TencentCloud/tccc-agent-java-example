@@ -1,6 +1,6 @@
 # 快速跑通坐席端Android Demo
 
-本文主要介绍如何快速跑通腾讯云呼叫中心访客端 Android TCCC Demo，只要按照如下步骤进行配置，就可以跑通访客端的 Android Demo。
+本文主要介绍如何快速跑通腾讯云呼叫中心坐席端 Android TCCC Demo，只要按照如下步骤进行配置，就可以跑通坐席端的 Android Demo。
 
 ## 开发环境要求
 - Android Studio 3.5+。
