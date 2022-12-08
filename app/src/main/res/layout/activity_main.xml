@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="Login"
+                            android:text="登录"
                             />
                         <Button
                             android:id="@+id/btnLogout"
@@ -82,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="Logout"
+                            android:text="退出"
                             />
                     </LinearLayout>
 
@@ -93,14 +93,16 @@
                         android:paddingLeft="10dp"
                         android:layout_marginTop="0dp"
                         android:paddingBottom="0dp">
+
                         <EditText
                             android:id="@+id/txtTo"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:ems="10"
                             android:hint="输入呼叫UserId"
-                            android:inputType="text" />
+                            android:inputType="text"
+                            android:minHeight="48dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -118,17 +120,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="Call"
-                            />
-                        <Button
-                            android:id="@+id/bntAnswer"
-                            android:textAllCaps="false"
-                            android:layout_marginLeft="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:padding="5dp"
-                            android:text="Answer"
+                            android:text="呼叫"
                             />
                         <Button
                             android:id="@+id/btnEnd"
@@ -138,18 +130,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="End"
+                            android:text="挂断"
                             />
-                        <Button
-                            android:id="@+id/btnAudioRoute"
-                            android:textAllCaps="false"
-                            android:layout_marginLeft="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:padding="5dp"
-                            android:text="AudioRoute"
-                            />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -160,14 +143,13 @@
                         android:layout_marginTop="0dp"
                         android:paddingBottom="0dp">
                         <Button
-                            android:id="@+id/btnSslTest"
+                            android:id="@+id/btnAudioRoute"
                             android:textAllCaps="false"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:layout_marginLeft="5dp"
-                            android:text="TestSSL"
+                            android:text="听筒/扬声器"
                             />
                         <Button
                             android:id="@+id/btnMute"
@@ -177,7 +159,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="Mute"
+                            android:text="静音"
                             />
                         <Button
                             android:id="@+id/btnUnMute"
@@ -187,7 +169,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="UnMute"
+                            android:text="取消静音"
                             />
                     </LinearLayout>
 
@@ -206,7 +188,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="getPlayoutVolume"
+                            android:text="获取音量"
                             />
                         <Button
                             android:id="@+id/btnSetPlayoutVolume"
@@ -216,7 +198,17 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="setPlayoutVolume"
+                            android:text="设置音量"
+                            />
+                        <Button
+                            android:id="@+id/btnClearLog"
+                            android:textAllCaps="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:text="清除日志"
                             />
                     </LinearLayout>
 

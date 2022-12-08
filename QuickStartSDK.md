@@ -1,6 +1,6 @@
-# 快速集成Android SDK
+# 快速集成腾讯云呼叫中心Sip话机 Android SDK
 
-本文主要介绍如何快速地将腾讯云呼叫中心 TCCC Agent SDK(Android) 集成到您的项目中，只要按照如下步骤进行配置，就可以完成 SDK 的集成工作。
+本文主要介绍如何快速地将腾讯云呼叫中心Sip话机 SDK(Android) 集成到您的项目中，只要按照如下步骤进行配置，就可以完成 SDK 的集成工作。
 
 ## 开发环境要求
 - Android Studio 3.5+。
@@ -11,10 +11,10 @@
 ### 手动下载（aar、jar）
 目前我们暂时还未发布到 mavenCentral ，您只能手动下载 SDK 集成到工程里：
 
-1. 下载最新版本 [TCCC Agent SDK](https://tccc.qcloud.com/assets/doc/Agent/CppSDKRelease/TCCCSDK_ios_last.zip)。
+1. 下载最新版本 [TCCC Agent SDK](https://tccc.qcloud.com/assets/doc/Agent/CppSDKRelease/TCCCSDK_android_aar_last.zip)。
 2. 将下载到的 aar 文件拷贝到工程的 **app/libs** 目录下。
 3. 在工程根目录下的 build.gradle 中，指定本地仓库路径。
-![](https://qcloudimg.tencent-cloud.cn/raw/efbfc73297c9065e787faaab6829c37b.png)
+![](https://qcloudimg.tencent-cloud.cn/raw/8c99bd1355929c9420d339fbc1c99d4e.png)
 ```
 implementation fileTree(dir: "libs",includes: ['*.aar','*.jar'])
 ```
@@ -65,3 +65,5 @@ TCCC 的日志默认压缩加密，后缀为 .log。
 ### TCCC Agent Android 端能不能支持模拟器？
 TCCC 目前版本暂时不支持，未来会支持模拟器。
 
+### 其他平台如IOS、Windows有没有对应的SDK？
+TCCC 提供了全平台SDK，如有需要可联系我们，我们线下提供。

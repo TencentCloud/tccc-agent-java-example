@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TCCCBaseActivity  extends AppCompatActivity {
+public abstract class TCCCBaseActivity extends AppCompatActivity {
 
     protected static final int REQ_PERMISSION_CODE = 0x1000;
     protected int mGrantedCount = 0;
@@ -24,12 +24,6 @@ public abstract class TCCCBaseActivity  extends AppCompatActivity {
             if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)) {
                 permissions.add(Manifest.permission.RECORD_AUDIO);
             }
-//            if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)) {
-//                permissions.add(Manifest.permission.CAMERA);
-//            }
-//            if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(this, Manifest.permission.SYSTEM_ALERT_WINDOW)) {
-//                permissions.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
-//            }
             if (permissions.size() != 0) {
                 ActivityCompat.requestPermissions(TCCCBaseActivity.this,
                         permissions.toArray(new String[0]),

@@ -1,17 +1,21 @@
 package com.tencent.tcccsdk.tcccdemo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tencent.tccc.TCCCDeviceManager;
 import com.tencent.tccc.TCCCListener;
 import com.tencent.tccc.TCCCTypeDef;
 import com.tencent.tccc.TCCCWorkstation;
 import com.tencent.tccc.TXCallback;
 import com.tencent.tcccsdk.tcccdemo.base.TCCCBaseActivity;
 import com.tencent.tcccsdk.tcccdemo.databinding.ActivityMainBinding;
+import com.tencent.tcccsdk.tcccdemo.debug.DebugSipUserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,20 +62,17 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onNewSession(TCCCTypeDef.ITCCCSessionInfo info) {
                 super.onNewSession(info);
-                Toast.makeText(MainActivity.this, "onNewSession sessionId="+info.sessionId , Toast.LENGTH_SHORT).show();
+                if(info.sessionDirection == TCCCTypeDef.TCCCSessionDirection.CallIn){
+                    showOnCallingDialog(info.fromUserId);
+                }
                 writeCallBackLog("onNewSession sessionId="+info.sessionId+" ,fromUserId="+info.fromUserId+" ,sessionDirection="+info.sessionDirection);
             }
 
             @Override
-            public void onEnded(int reason, String reasonMessage, String sessionId) {
+            public void onEnded(TCCCListener.EndedReason reason, String reasonMessage, String sessionId) {
                 super.onEnded(reason, reasonMessage, sessionId);
-                writeCallBackLog("onEnded sessionId="+sessionId+" ,reason="+reason+" ,reasonMessage="+reasonMessage);
-            }
-
-            @Override
-            public void onAccepted(String sessionId) {
-                super.onAccepted(sessionId);
-                writeCallBackLog("onAccepted sessionId="+sessionId);
+                closeOnCallingDialog();
+                writeCallBackLog("onEnded sessionId="+sessionId+" ,reason="+reason.toString()+" ,reasonMessage="+reasonMessage);
             }
 
             @Override
@@ -87,19 +88,19 @@ public class MainActivity extends TCCCBaseActivity {
             }
 
             @Override
-            public void onConnectionLost(int serverType) {
+            public void onConnectionLost(TCCCListener.TCCCServerType serverType) {
                 super.onConnectionLost(serverType);
                 writeCallBackLog("onConnectionLost");
             }
 
             @Override
-            public void onTryToReconnect(int serverType) {
+            public void onTryToReconnect(TCCCListener.TCCCServerType serverType) {
                 super.onTryToReconnect(serverType);
                 writeCallBackLog("onTryToReconnect");
             }
 
             @Override
-            public void onConnectionRecovery(int serverType) {
+            public void onConnectionRecovery(TCCCListener.TCCCServerType serverType) {
                 super.onConnectionRecovery(serverType);
                 writeCallBackLog("onConnectionRecovery");
             }
@@ -108,31 +109,63 @@ public class MainActivity extends TCCCBaseActivity {
 
     private void startCall(){
         String to =binding.txtTo.getText().toString();
-        writeFunCallLog("tccc.call, to = "+ to);
+        writeCallFunctionLog("tccc.call, to = "+ to);
         TCCCTypeDef.TCCCStartCallParams params =new TCCCTypeDef.TCCCStartCallParams();
         params.to =to;
         tcccSDK.call(params, new TXCallback() {
             @Override
             public void onSuccess() {
-                writeFunCallValueLog("call success");
+                writeAsynCallBackLog("call success");
             }
 
             @Override
             public void onError(int code, String desc) {
-                writeFunCallValueLog("call error , errorCode="+code+",desc="+desc);
+                writeAsynCallBackLog("call error , errorCode="+code+",desc="+desc);
+                showError("呼叫失败，"+desc);
             }
         });
     }
+
+    private AlertDialog onCallingDialog;
+    private void showOnCallingDialog(String fromUserId) {
+        onCallingDialog=new AlertDialog.Builder(this)
+                .setTitle("您有新的来电")
+                .setCancelable(false)
+                .setMessage(fromUserId+" 来电，请您接听")
+                .setNegativeButton("拒接", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        end();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setPositiveButton("接听", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        answer();
+                        dialog.dismiss();
+                    }
+                }).create();
+        onCallingDialog.show();
+    }
+
+    private void closeOnCallingDialog(){
+        if(onCallingDialog == null)
+            return;
+        onCallingDialog.dismiss();
+    }
+
     private void answer(){
         tcccSDK.answer("", new TXCallback() {
             @Override
             public void onSuccess() {
-                writeFunCallValueLog("answer success");
+                writeAsynCallBackLog("answer success");
             }
 
             @Override
             public void onError(int code, String desc) {
-                writeFunCallValueLog("answer error , errorCode="+code+",desc="+desc);
+                writeAsynCallBackLog("answer error , errorCode="+code+",desc="+desc);
+                showError("接听失败，"+desc);
             }
         });
     }
@@ -140,18 +173,20 @@ public class MainActivity extends TCCCBaseActivity {
         tcccSDK.logout(new TXCallback() {
             @Override
             public void onSuccess() {
-                writeFunCallValueLog("logout success");
+                writeAsynCallBackLog("logout success");
             }
 
             @Override
             public void onError(int code, String desc) {
-                writeFunCallValueLog("logout error , errorCode="+code+",desc="+desc);
+                writeAsynCallBackLog("logout error , errorCode="+code+",desc="+desc);
+                showError("退出登录失败，"+desc);
             }
         });
     }
+
     private boolean isSpeakerphone =true;
     private void changeAudioRoute(){
-        tcccSDK.getDeviceManager().setAudioRoute(isSpeakerphone?0:1);
+        tcccSDK.getDeviceManager().setAudioRoute(isSpeakerphone? TCCCDeviceManager.TCCCAudioRoute.TCCCAudioRouteSpeakerphone:TCCCDeviceManager.TCCCAudioRoute.TCCCAudioRouteEarpiece);
         isSpeakerphone=!isSpeakerphone;
     }
     private void changeMute(boolean isMute){
@@ -164,29 +199,37 @@ public class MainActivity extends TCCCBaseActivity {
         TCCCTypeDef.TCCCLoginParams params = new TCCCTypeDef.TCCCLoginParams();
         params.userId=binding.txtUserId.getText().toString();
         params.password =binding.txtPsw.getText().toString();
-        writeFunCallLog("tcccSDK.login userId="+params.userId);
+        writeCallFunctionLog("tcccSDK.login userId="+params.userId);
         tcccSDK.login(params, new TXCallback() {
             @Override
             public void onSuccess() {
-                writeFunCallValueLog("login success");
+                writeAsynCallBackLog("login success");
             }
 
             @Override
             public void onError(int code, String desc) {
-                writeFunCallValueLog("login error, code="+code+" , desc="+desc);
+                writeAsynCallBackLog("login error, code="+code+" , desc="+desc);
+                showError("登录失败，"+desc);
             }
         });
     }
 
     private void end(){
-        writeFunCallLog("tccc.terminate");
+        writeCallFunctionLog("tccc.terminate");
         tcccSDK.terminate("");
     }
 
     private void initViewListener() {
-        binding.txtUserId.setText(DebugUserInfo.TestLoginUserId);
-        binding.txtPsw.setText(DebugUserInfo.TestLoginPassword);
-        binding.txtTo.setText(DebugUserInfo.TestCallToUserId);
+        binding.txtUserId.setText(DebugSipUserInfo.TestSipLoginUserId);
+        binding.txtPsw.setText(DebugSipUserInfo.TestSipLoginPassword);
+        binding.txtTo.setText(DebugSipUserInfo.TestCallToUserId);
+        binding.btnClearLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLogList.clear();
+                refreshTcccLogView();
+            }
+        });
         binding.btnShowT3CLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,13 +245,6 @@ public class MainActivity extends TCCCBaseActivity {
                 }else{
                     binding.tvTcccLog.setVisibility(View.GONE);
                 }
-            }
-        });
-        binding.btnSslTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tcccSDK.callExperimentalAPI("setOutboundProxy","sip:sip-dev.tccc.qcloud.com:5061 tls");
-                writeFunCallLog("tcccSDK.callExperimentalAPI setOutboundProxy sip:sip-dev.tccc.qcloud.com:5061 tls");
             }
         });
         binding.bntCall.setOnClickListener(new View.OnClickListener() {
@@ -227,12 +263,6 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onClick(View view) {
                 end();
-            }
-        });
-        binding.bntAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                answer();
             }
         });
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -263,30 +293,32 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onClick(View view) {
                 int volume = tcccSDK.getDeviceManager().getAudioPlayoutVolume();
-                writeFunCallLog("getAudioPlayoutVolume volume="+volume);
+                writeCallFunctionLog("getAudioPlayoutVolume volume="+volume);
             }
         });
         binding.btnSetPlayoutVolume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tcccSDK.getDeviceManager().setAudioPlayoutVolume(70);
-                writeFunCallLog("setAudioPlayoutVolume volume=70");
+                writeCallFunctionLog("setAudioPlayoutVolume volume=70");
             }
         });
     }
 
-    private void writeFunCallLog(String msg){
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    private void writeCallFunctionLog(String msg){
         msg = "==> "+msg;
         mLogList.add(msg);
         refreshTcccLogView();
     }
 
-    private void writeFunCallValueLog(String msg){
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    private void writeAsynCallBackLog(String msg){
         msg ="== "+msg;
         mLogList.add(msg);
         refreshTcccLogView();
+    }
+
+    private void showError(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void writeCallBackLog(String msg){
