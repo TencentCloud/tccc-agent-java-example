@@ -47,6 +47,6 @@
 基本功能如下图所示
 | 呼叫效果 | 接听效果 |
 |-----|-----|
-|![](https://qcloudimg.tencent-cloud.cn/raw/2f621165b647c03105a85176c89f7db6.jpeg)|![](https://qcloudimg.tencent-cloud.cn/raw/1a8c1de2c30e1f108d31ad46a45aa78f.jpeg)|
+|![](https://qcloudimg.tencent-cloud.cn/raw/f7745447148dc93969f4c110864579e0.jpeg)|![](https://qcloudimg.tencent-cloud.cn/raw/1a8c1de2c30e1f108d31ad46a45aa78f.jpeg)|
 
 
