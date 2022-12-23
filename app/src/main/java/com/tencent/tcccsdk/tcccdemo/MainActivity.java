@@ -156,7 +156,7 @@ public class MainActivity extends TCCCBaseActivity {
     }
 
     private void answer(){
-        tcccSDK.answer("", new TXCallback() {
+        tcccSDK.answer( new TXCallback() {
             @Override
             public void onSuccess() {
                 writeAsynCallBackLog("answer success");
@@ -191,9 +191,9 @@ public class MainActivity extends TCCCBaseActivity {
     }
     private void changeMute(boolean isMute){
         if(isMute)
-            tcccSDK.mute("");
+            tcccSDK.mute();
         else
-            tcccSDK.unmute("");
+            tcccSDK.unmute();
     }
     private void login(){
         TCCCTypeDef.TCCCLoginParams params = new TCCCTypeDef.TCCCLoginParams();
@@ -216,7 +216,7 @@ public class MainActivity extends TCCCBaseActivity {
 
     private void end(){
         writeCallFunctionLog("tccc.terminate");
-        tcccSDK.terminate("");
+        tcccSDK.terminate();
     }
 
     private void initViewListener() {
