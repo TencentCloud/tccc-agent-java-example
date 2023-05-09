@@ -13,9 +13,10 @@ import com.tencent.tccc.TCCCListener;
 import com.tencent.tccc.TCCCTypeDef;
 import com.tencent.tccc.TCCCWorkstation;
 import com.tencent.tccc.TXCallback;
+import com.tencent.tccc.TXValueCallback;
 import com.tencent.tcccsdk.tcccdemo.base.TCCCBaseActivity;
 import com.tencent.tcccsdk.tcccdemo.databinding.ActivityMainBinding;
-import com.tencent.tcccsdk.tcccdemo.debug.DebugSipUserInfo;
+import com.tencent.tcccsdk.debug.GenerateTestUserToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,11 @@ public class MainActivity extends TCCCBaseActivity {
             }
 
             @Override
+            public void onAccepted(String sessionId) {
+                super.onAccepted(sessionId);
+                writeCallBackLog("onAccepted sessionId="+sessionId);
+            }
+            @Override
             public void onEnded(TCCCListener.EndedReason reason, String reasonMessage, String sessionId) {
                 super.onEnded(reason, reasonMessage, sessionId);
                 closeOnCallingDialog();
@@ -111,7 +117,8 @@ public class MainActivity extends TCCCBaseActivity {
         String to =binding.txtTo.getText().toString();
         writeCallFunctionLog("tccc.call, to = "+ to);
         TCCCTypeDef.TCCCStartCallParams params =new TCCCTypeDef.TCCCStartCallParams();
-        params.to =to;
+        params.to = to;
+        params.remark = "fromAndroid";
         tcccSDK.call(params, new TXCallback() {
             @Override
             public void onSuccess() {
@@ -198,12 +205,14 @@ public class MainActivity extends TCCCBaseActivity {
     private void login(){
         TCCCTypeDef.TCCCLoginParams params = new TCCCTypeDef.TCCCLoginParams();
         params.userId=binding.txtUserId.getText().toString();
-        params.password =binding.txtPsw.getText().toString();
+        params.token =binding.txtToken.getText().toString();
+        params.type = TCCCTypeDef.TCCCLoginType.Agent;
+        params.sdkAppId = GenerateTestUserToken.SDKAPPID;
         writeCallFunctionLog("tcccSDK.login userId="+params.userId);
-        tcccSDK.login(params, new TXCallback() {
+        tcccSDK.login(params, new TXValueCallback<TCCCTypeDef.TCCCLoginInfo>() {
             @Override
-            public void onSuccess() {
-                writeAsynCallBackLog("login success");
+            public void onSuccess(TCCCTypeDef.TCCCLoginInfo tcccLoginInfo) {
+                writeAsynCallBackLog(tcccLoginInfo.userId+",login success");
             }
 
             @Override
@@ -220,9 +229,40 @@ public class MainActivity extends TCCCBaseActivity {
     }
 
     private void initViewListener() {
-        binding.txtUserId.setText(DebugSipUserInfo.TestSipLoginUserId);
-        binding.txtPsw.setText(DebugSipUserInfo.TestSipLoginPassword);
-        binding.txtTo.setText(DebugSipUserInfo.TestCallToUserId);
+        binding.txtUserId.setText(GenerateTestUserToken.USERID);
+        GenerateTestUserToken.genTestUserSig(GenerateTestUserToken.SECRETID, GenerateTestUserToken.SECRETKEY,
+                GenerateTestUserToken.SDKAPPID, GenerateTestUserToken.USERID, new GenerateTestUserToken.UserTokenCallBack() {
+                    @Override
+                    public void onSuccess(String value) {
+                        binding.txtToken.setText(value);
+                    }
+
+                    @Override
+                    public void onError(int code, String desc) {
+                        writeAsynCallBackLog("genTestUserSig error, code="+code+" , desc="+desc);
+                        showError("获取Token失败，"+desc);
+                    }
+                });
+        binding.btnGenTestToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                GenerateTestUserToken.genTestUserSig(GenerateTestUserToken.SECRETID, GenerateTestUserToken.SECRETKEY,
+                        GenerateTestUserToken.SDKAPPID, GenerateTestUserToken.USERID, new GenerateTestUserToken.UserTokenCallBack() {
+                            @Override
+                            public void onSuccess(String value) {
+                                binding.txtToken.setText(value);
+                            }
+
+                            @Override
+                            public void onError(int code, String desc) {
+                                writeAsynCallBackLog("genTestUserSig error, code="+code+" , desc="+desc);
+                                showError("获取Token失败，"+desc);
+                            }
+                        });
+            }
+        });
+        binding.txtTo.setText(GenerateTestUserToken.TO);
         binding.btnClearLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

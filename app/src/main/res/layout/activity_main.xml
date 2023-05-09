@@ -47,7 +47,7 @@
                             android:inputType="textPersonName"
                             android:text="" />
                         <EditText
-                            android:id="@+id/txtPsw"
+                            android:id="@+id/txtToken"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -83,6 +83,16 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:text="退出"
+                            />
+                        <Button
+                            android:id="@+id/btnGenTestToken"
+                            android:textAllCaps="false"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="5dp"
+                            android:text="获取token"
                             />
                     </LinearLayout>
 
