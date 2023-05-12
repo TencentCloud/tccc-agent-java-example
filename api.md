@@ -67,7 +67,7 @@ tcccSDK.call(callParams, new TXCallback() {
     }
 });
 // 结束通话
-tcccSDK.terminate("");
+tcccSDK.terminate();
 ```
 
 
