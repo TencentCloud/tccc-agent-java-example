@@ -18,6 +18,7 @@ tcccSDK.setListener(new TCCCListener() {});
 | API | 描述 |
 |-----|-----|
 | [login](https://tccc.qcloud.com/assets/doc/Agent/JavaAPI/classcom_1_1tencent_1_1tccc_1_1_t_c_c_c_workstation.html#a83f875ae3f2c68a395ed0d3b53c0590d) | SDK 登录 |
+| [checkLogin](https://tccc.qcloud.com/assets/doc/Agent/JavaAPI/classcom_1_1tencent_1_1tccc_1_1_t_c_c_c_workstation.html#af16b64c6aeb9f8d1ed4309a35526a5e7) | 检查 SDK 是否已登录 |
 | [logout](https://tccc.qcloud.com/assets/doc/Agent/JavaAPI/classcom_1_1tencent_1_1tccc_1_1_t_c_c_c_workstation.html#a8d55d40e155d93503d119d6e1f1af613) | SDK 退出登录 |
 
 #### 登录示例代码
@@ -98,8 +99,8 @@ TCCCWorkstation.getSDKVersion();
 ### 错误和警告事件
 | API | 描述 |
 |-----|-----|
-| [onError]() | 错误事件回调 |
-| [onWarning]() | 警告事件回调 |
+| [onError](https://tccc.qcloud.com/assets/doc/Agent/JavaAPI/classcom_1_1tencent_1_1tccc_1_1_t_c_c_c_listener.html#ae7d53c3064920b7895196614390a3f01) | 错误事件回调 |
+| [onWarning](https://tccc.qcloud.com/assets/doc/Agent/JavaAPI/classcom_1_1tencent_1_1tccc_1_1_t_c_c_c_listener.html#aa7463a2d2d9e40272bd50cc0f4b42d69) | 警告事件回调 |
 #### 处理错误回调事件回调示例代码
 ```java
 tcccSDK.setListener(new TCCCListener() {
