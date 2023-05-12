@@ -54,7 +54,12 @@
 ![](https://tccc.qcloud.com/assets/doc/Agent/JavaAPI/img/Android_Demo.png)
 
 
-### 步骤4：编译运行
+> ! 请不要将如下代码发布到您的线上正式版本的 App 中，原因如下：
+ - 本文件中的代码虽然能够正确计算出 Token，但仅适合快速调通 SDK 的基本功能，**不适合线上产品**，这是因为客户端代码中的 SECRETKEY 很容易被反编译逆向破解，尤其是 Web 端的代码被破解的难度几乎为零。一旦您的密钥泄露，攻击者就可以计算出正确的 Token 来盗用您的腾讯云流量。 
+ - 正确的做法是将 Token 的计算代码和加密密钥放在您的业务服务器上，然后由 App 按需向您的服务器获取实时算出的 Token。由于破解服务器的成本要高于破解客户端 App，所以服务器计算的方案能够更好地保护您的加密密钥。更多详情请参见[创建 SDK 登录 Token](https://cloud.tencent.com/document/product/679/49227)
+
+
+### 步骤3：编译运行
   使用 Android Studio（3.5及以上的版本）打开源码工程 `tccc-agent-java-example`，单击**运行**即可。
 
 1. 点击登录，
