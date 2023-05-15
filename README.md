@@ -1,5 +1,5 @@
 # tccc-agent-java-example
-腾讯云呼叫中心坐席example，是基于sip话机实现坐席呼叫、接听相关通信能力。该项目适合在Android的终端运行。
+腾讯云呼叫中心坐席example，是基于腾讯云呼叫中心Android SDK实现坐席呼叫、接听相关通信能力。该项目适合在Android的终端运行。
 
 ## 坐席端 Demo
 - [快速跑通demo](QuickStartDemo.md)
