@@ -24,8 +24,8 @@ public class GenerateTestUserToken {
     public static final String USERID = "";
 
     /**
-     * 腾讯云呼叫中心 SDKAppId，需要替换为您自己账号下的 SDKAppId。
-     * 进入腾讯云呼叫中心[控制台](https://console.cloud.tencent.com/ccc ) 创建应用，即可看到 SDKAppId，
+     * 腾讯云联络中心 SDKAppId，需要替换为您自己账号下的 SDKAppId。
+     * 进入腾讯云联络中心[控制台](https://console.cloud.tencent.com/ccc ) 创建应用，即可看到 SDKAppId，
      * 它是腾讯云用于区分客户的唯一标识。
      */
     public static final long SDKAPPID = 0;
@@ -54,7 +54,7 @@ public class GenerateTestUserToken {
      *
      * @param secretId 计算签名用的加密密钥ID
      * @param secretKey 计算签名用的加密密钥Key
-     * @param sdkAppId 腾讯云呼叫中心 SDKAppId，需要替换为您自己账号下的 SDKAppId。
+     * @param sdkAppId 腾讯云联络中心 SDKAppId，需要替换为您自己账号下的 SDKAppId。
      * @param userId 座席账号
      *
      * @note 请不要将如下代码发布到您的线上正式版本的 App 中，原因如下：

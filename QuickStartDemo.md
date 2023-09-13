@@ -1,7 +1,7 @@
-## 快速跑通腾讯云呼叫中心 Android Demo
+## 快速跑通腾讯云联络中心 Android Demo
 
-腾讯云呼叫中心提供了 Android SDK，可以让座席实现拨打电话、手机等功能。也可以通过我们提供的 SDK 来实现在手机端、PC 端外呼、呼入来电接听等场景。
-本文主要介绍如何快速跑通腾讯云呼叫中心 Android Demo，只要按照如下步骤进行配置，就可以跑通基于腾讯云呼叫中心相关功能。
+腾讯云联络中心提供了 Android SDK，可以让座席实现拨打电话、手机等功能。也可以通过我们提供的 SDK 来实现在手机端、PC 端外呼、呼入来电接听等场景。
+本文主要介绍如何快速跑通腾讯云联络中心 Android Demo，只要按照如下步骤进行配置，就可以跑通基于腾讯云联络中心相关功能。
 
 ## 开发环境要求
 
@@ -11,16 +11,16 @@
 ## 前提条件
 
 - 您已 [注册腾讯云](https://cloud.tencent.com/document/product/378/17985) 账号，并完成 [实名认证](https://cloud.tencent.com/document/product/378/3629) 。
-- 您已 [开通云呼叫中心](https://cloud.tencent.com/document/product/679/48028#.E6.AD.A5.E9.AA.A41.EF.BC.9A.E5.87.86.E5.A4.87.E5.B7.A5.E4.BD.9C) 服务，并创建了 [云呼叫中心实例](https://cloud.tencent.com/document/product/679/48028#.E6.AD.A5.E9.AA.A42.EF.BC.9A.E5.88.9B.E5.BB.BA.E4.BA.91.E5.91.BC.E5.8F.AB.E4.B8.AD.E5.BF.83.E5.AE.9E.E4.BE.8B) 。
+- 您已 [开通云联络中心](https://cloud.tencent.com/document/product/679/48028#.E6.AD.A5.E9.AA.A41.EF.BC.9A.E5.87.86.E5.A4.87.E5.B7.A5.E4.BD.9C) 服务，并创建了 [云联络中心实例](https://cloud.tencent.com/document/product/679/48028#.E6.AD.A5.E9.AA.A42.EF.BC.9A.E5.88.9B.E5.BB.BA.E4.BA.91.E5.91.BC.E5.8F.AB.E4.B8.AD.E5.BF.83.E5.AE.9E.E4.BE.8B) 。
 - 您已购买了号码，[查看购买指南](https://cloud.tencent.com/document/product/679/73526)。并且完成了对应的[IVR配置](https://cloud.tencent.com/document/product/679/73549)
 
 ## 关键概念
 
-1. **SdkAppId**：是用户在 [腾讯云呼叫中心控制台](https://console.cloud.tencent.com/ccc) 上创建的应用 ID，称之为 SdkAppId，一个腾讯云账号最多可以创建20个腾讯呼叫中心应用，通常为140开头。
+1. **SdkAppId**：是用户在 [腾讯云联络中心控制台](https://console.cloud.tencent.com/ccc) 上创建的应用 ID，称之为 SdkAppId，一个腾讯云账号最多可以创建20个腾讯联络中心应用，通常为140开头。
 [](id:SdkAppId)
 
 
-2. **UserID** ：座席或管理员在腾讯云呼叫中心内配置的账号，通常为邮箱格式，首次创建应用，主账号可前往 [站内信](https://console.cloud.tencent.com/message)（子账号需订阅云呼叫中心产品消息） 查看呼叫中心管理员账号和密码。一个 SDKAppID 下可以配置多个 UserID，如果超出配置数量限制，需到 [座席购买页](https://buy.cloud.tencent.com/ccc_seat) 购买更多座席数量。
+2. **UserID** ：座席或管理员在腾讯云联络中心内配置的账号，通常为邮箱格式，首次创建应用，主账号可前往 [站内信](https://console.cloud.tencent.com/message)（子账号需订阅云联络中心产品消息） 查看联络中心管理员账号和密码。一个 SDKAppID 下可以配置多个 UserID，如果超出配置数量限制，需到 [座席购买页](https://buy.cloud.tencent.com/ccc_seat) 购买更多座席数量。
 [](id:UserID)
 
 
@@ -45,7 +45,7 @@
 2. 设置 GenerateTestUserToken.java 文件中的相关参数：
 <ul>
   <li/>USERID：座席账号，格式为 ： xxx@qq.com
-  <li/>SDKAPPID：腾讯云呼叫中心 SDKAppId，需要替换为您自己账号下的 SDKAppId
+  <li/>SDKAPPID：腾讯云联络中心 SDKAppId，需要替换为您自己账号下的 SDKAppId
 	<li/>SECRETID：计算签名用的加密密钥ID。
   <li/>SECRETKEY：计算签名用的加密密钥Key。
 </ul>
