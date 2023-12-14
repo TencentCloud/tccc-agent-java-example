@@ -78,28 +78,6 @@ TCCC 目前版本暂时不支持，未来会支持模拟器。
 
 注意 安卓9.0系统对App退后台的麦克风做了限制，为防止通话的时候程序退后台引起的通话被静音问题，请在App退后台情况下发送前台通知来防止通话被静音。
 
-### 发起呼叫报 408 或者 503 错误，如何处理？
-
-这种情况一般出现在应用程序切后台重新唤醒后，网络状态还未完全恢复。我们强烈建议您在发起呼叫或者是程序切回前台的时候调用接口判断是否是已登录。
-
-```java
-// 检查登录状态
-tcccSDK.checkLogin(new TXCallback() {
-    @Override
-    public void onSuccess() {
-        // 已登录成功
-    }
-
-    @Override
-    public void onError(int code, String message) {
-        // 登录异常，提醒用户，并且重新登陆。
-        if (code == 408 || code==503) {
-            // 网络还未恢复，重置网络。
-            tcccSDK.resetSip(false);
-        }
-    }
-});
-```
 
 ### 其他平台如IOS、Windows有没有对应的SDK？
 
