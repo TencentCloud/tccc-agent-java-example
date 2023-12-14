@@ -111,6 +111,8 @@ public class MainActivity extends TCCCBaseActivity {
                 writeCallBackLog("onConnectionRecovery");
             }
         });
+        String version = TCCCWorkstation.getSDKVersion();
+        writeCallFunctionLog("TCCC SDK Version:"+version);
     }
 
     private void startCall(){
