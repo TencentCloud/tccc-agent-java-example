@@ -65,6 +65,17 @@
                         android:layout_marginTop="0dp"
                         android:paddingBottom="0dp">
                         <Button
+                            android:id="@+id/btnGenTestToken"
+                            android:textAllCaps="false"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="5dp"
+                            android:text="获取token"
+                            />
+
+                        <Button
                             android:id="@+id/btnLogin"
                             android:textAllCaps="false"
                             android:layout_width="wrap_content"
@@ -84,16 +95,7 @@
                             android:padding="5dp"
                             android:text="退出"
                             />
-                        <Button
-                            android:id="@+id/btnGenTestToken"
-                            android:textAllCaps="false"
-                            android:layout_width="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:padding="5dp"
-                            android:text="获取token"
-                            />
+
                     </LinearLayout>
 
                     <LinearLayout

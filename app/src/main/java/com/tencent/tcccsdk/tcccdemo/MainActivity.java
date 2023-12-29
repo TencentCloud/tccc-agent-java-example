@@ -130,7 +130,7 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("call error , errorCode="+code+",desc="+desc);
-                showError("呼叫失败，"+desc);
+                showTipsMessage("呼叫失败，"+desc);
             }
         });
     }
@@ -174,7 +174,7 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("answer error , errorCode="+code+",desc="+desc);
-                showError("接听失败，"+desc);
+                showTipsMessage("接听失败，"+desc);
             }
         });
     }
@@ -188,7 +188,7 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("logout error , errorCode="+code+",desc="+desc);
-                showError("退出登录失败，"+desc);
+                showTipsMessage("退出登录失败，"+desc);
             }
         });
     }
@@ -220,7 +220,7 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("login error, code="+code+" , desc="+desc);
-                showError("登录失败，"+desc);
+                showTipsMessage("登录失败，"+desc);
             }
         });
     }
@@ -242,7 +242,7 @@ public class MainActivity extends TCCCBaseActivity {
                     @Override
                     public void onError(int code, String desc) {
                         writeAsynCallBackLog("genTestUserSig error, code="+code+" , desc="+desc);
-                        showError("获取Token失败，"+desc);
+                        showTipsMessage("获取Token失败，"+desc);
                     }
                 });
         binding.btnGenTestToken.setOnClickListener(new View.OnClickListener() {
@@ -253,13 +253,15 @@ public class MainActivity extends TCCCBaseActivity {
                         GenerateTestUserToken.SDKAPPID, GenerateTestUserToken.USERID, new GenerateTestUserToken.UserTokenCallBack() {
                             @Override
                             public void onSuccess(String value) {
+                                writeAsynCallBackLog("genTestUserSig success, token="+value);
                                 binding.txtToken.setText(value);
+                                showTipsMessage("获取token成功，请点击登录");
                             }
 
                             @Override
                             public void onError(int code, String desc) {
                                 writeAsynCallBackLog("genTestUserSig error, code="+code+" , desc="+desc);
-                                showError("获取Token失败，"+desc);
+                                showTipsMessage("获取Token失败，"+desc);
                             }
                         });
             }
@@ -359,7 +361,7 @@ public class MainActivity extends TCCCBaseActivity {
         refreshTcccLogView();
     }
 
-    private void showError(String msg){
+    private void showTipsMessage(String msg){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
