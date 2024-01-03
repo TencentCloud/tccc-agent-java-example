@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">云联络中心坐席端Demo</string>
+    <string name="enterUserName">请输入用户名(邮箱)</string>
+    <string name="enterPassword">请输入Token(点击获取Token)</string>
+    <string name="enterCallUser">请输入需要呼叫的号码</string>
+    <string name="genTestToken">获取Token</string>
+    <string name="login">登录</string>
+    <string name="checkLogin">检查登录</string>
+    <string name="logout">退出</string>
+    <string name="call">呼叫</string>
+    <string name="hangUp">挂断</string>
+    <string name="MicrophoneOrSpeaker">麦克风/扬声器</string>
+    <string name="mute">静音</string>
+    <string name="unMute">取消静音</string>
+    <string name="GetVolume">获取音量</string>
+    <string name="SetVolume">设置音量</string>
+    <string name="ClearLogs">清空日志</string>
+    <string name="answer">接听</string>
+    <string name="reject">拒接</string>
+    <string name="IncomingCall">您有新的来电</string>
+    <string name="IncomingCallFromXX">%s 来电，请及时接听。</string>
+</resources>

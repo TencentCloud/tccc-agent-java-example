@@ -130,7 +130,7 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("call error , errorCode="+code+",desc="+desc);
-                showTipsMessage("呼叫失败，"+desc);
+                showTipsMessage("Call Failed，"+desc);
             }
         });
     }
@@ -138,17 +138,17 @@ public class MainActivity extends TCCCBaseActivity {
     private AlertDialog onCallingDialog;
     private void showOnCallingDialog(String fromUserId) {
         onCallingDialog=new AlertDialog.Builder(this)
-                .setTitle("您有新的来电")
+                .setTitle(R.string.IncomingCall)
                 .setCancelable(false)
-                .setMessage(fromUserId+" 来电，请您接听")
-                .setNegativeButton("拒接", new DialogInterface.OnClickListener() {
+                .setMessage(String.format(getResources().getString(R.string.IncomingCallFromXX),fromUserId))
+                .setNegativeButton(R.string.reject, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         end();
                         dialogInterface.dismiss();
                     }
                 })
-                .setPositiveButton("接听", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.answer, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         answer();
@@ -165,6 +165,7 @@ public class MainActivity extends TCCCBaseActivity {
     }
 
     private void answer(){
+        writeCallFunctionLog("tccc.answer");
         tcccSDK.answer( new TXCallback() {
             @Override
             public void onSuccess() {
@@ -174,11 +175,12 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("answer error , errorCode="+code+",desc="+desc);
-                showTipsMessage("接听失败，"+desc);
+                showTipsMessage("answer failed，"+desc);
             }
         });
     }
     private void logout(){
+        writeCallFunctionLog("tccc.logout");
         tcccSDK.logout(new TXCallback() {
             @Override
             public void onSuccess() {
@@ -188,21 +190,26 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("logout error , errorCode="+code+",desc="+desc);
-                showTipsMessage("退出登录失败，"+desc);
+                showTipsMessage("logout failed，"+desc);
             }
         });
     }
 
     private boolean isSpeakerphone =true;
     private void changeAudioRoute(){
+        writeCallFunctionLog("tccc.setAudioRoute,"+(isSpeakerphone?"Speaker":"Earpiece"));
         tcccSDK.getDeviceManager().setAudioRoute(isSpeakerphone? TCCCDeviceManager.TCCCAudioRoute.TCCCAudioRouteSpeakerphone:TCCCDeviceManager.TCCCAudioRoute.TCCCAudioRouteEarpiece);
         isSpeakerphone=!isSpeakerphone;
     }
     private void changeMute(boolean isMute){
-        if(isMute)
+        if(isMute) {
+            writeCallFunctionLog("tccc.mute");
             tcccSDK.mute();
-        else
+        }
+        else {
+            writeCallFunctionLog("tccc.unmute");
             tcccSDK.unmute();
+        }
     }
     private void login(){
         TCCCTypeDef.TCCCLoginParams params = new TCCCTypeDef.TCCCLoginParams();
@@ -220,7 +227,7 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onError(int code, String desc) {
                 writeAsynCallBackLog("login error, code="+code+" , desc="+desc);
-                showTipsMessage("登录失败，"+desc);
+                showTipsMessage("login failed，"+desc);
             }
         });
     }
@@ -232,36 +239,38 @@ public class MainActivity extends TCCCBaseActivity {
 
     private void initViewListener() {
         binding.txtUserId.setText(GenerateTestUserToken.USERID);
+        writeCallFunctionLog("genTestUserSig");
         GenerateTestUserToken.genTestUserSig(GenerateTestUserToken.SECRETID, GenerateTestUserToken.SECRETKEY,
                 GenerateTestUserToken.SDKAPPID, GenerateTestUserToken.USERID, new GenerateTestUserToken.UserTokenCallBack() {
                     @Override
                     public void onSuccess(String value) {
                         binding.txtToken.setText(value);
+                        writeAsynCallBackLog("genTestUserSig success, token="+value);
                     }
 
                     @Override
                     public void onError(int code, String desc) {
                         writeAsynCallBackLog("genTestUserSig error, code="+code+" , desc="+desc);
-                        showTipsMessage("获取Token失败，"+desc);
+                        showTipsMessage("Get Token Failed，"+desc);
                     }
                 });
         binding.btnGenTestToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                writeCallFunctionLog("genTestUserSig");
                 GenerateTestUserToken.genTestUserSig(GenerateTestUserToken.SECRETID, GenerateTestUserToken.SECRETKEY,
                         GenerateTestUserToken.SDKAPPID, GenerateTestUserToken.USERID, new GenerateTestUserToken.UserTokenCallBack() {
                             @Override
                             public void onSuccess(String value) {
                                 writeAsynCallBackLog("genTestUserSig success, token="+value);
                                 binding.txtToken.setText(value);
-                                showTipsMessage("获取token成功，请点击登录");
+                                showTipsMessage("Get Token Success，please click the Login button");
                             }
 
                             @Override
                             public void onError(int code, String desc) {
                                 writeAsynCallBackLog("genTestUserSig error, code="+code+" , desc="+desc);
-                                showTipsMessage("获取Token失败，"+desc);
+                                showTipsMessage("Get Token Failed，"+desc);
                             }
                         });
             }
@@ -272,6 +281,7 @@ public class MainActivity extends TCCCBaseActivity {
             public void onClick(View view) {
                 mLogList.clear();
                 refreshTcccLogView();
+                writeCallFunctionLog("clear logs");
             }
         });
         binding.btnShowT3CLog.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +290,7 @@ public class MainActivity extends TCCCBaseActivity {
                 isShowLogView =  !isShowLogView;
                 if(isShowLogView){
                     binding.tvTcccLog.setVisibility(View.VISIBLE);
-                    String log ="TCCC日志窗口"+"\r\n";
+                    String log ="TCCC Logs:"+"\r\n";
                     for (int i=0;i<mLogList.size();i++){
                         log+=mLogList.get(i)+"\r\n";
                     }
@@ -301,6 +311,23 @@ public class MainActivity extends TCCCBaseActivity {
             @Override
             public void onClick(View view) {
                 login();
+            }
+        });
+        binding.btnCheckLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                writeCallFunctionLog("tcccSDK.checkLogin");
+                tcccSDK.checkLogin(new TXCallback() {
+                    @Override
+                    public void onSuccess() {
+                        writeAsynCallBackLog("checkLogin onSuccess");
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        writeAsynCallBackLog("checkLogin onError,errorCode="+i+" ,errorMessage="+s);
+                    }
+                });
             }
         });
         binding.btnEnd.setOnClickListener(new View.OnClickListener() {
@@ -336,15 +363,17 @@ public class MainActivity extends TCCCBaseActivity {
         binding.btnGetPlayoutVolume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                writeCallFunctionLog("tccc.getAudioPlayoutVolume");
                 int volume = tcccSDK.getDeviceManager().getAudioPlayoutVolume();
-                writeCallFunctionLog("getAudioPlayoutVolume volume="+volume);
+                writeCallBackLog("getAudioPlayoutVolume volume="+volume);
             }
         });
         binding.btnSetPlayoutVolume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                writeCallFunctionLog("tccc.setAudioPlayoutVolume(70)");
                 tcccSDK.getDeviceManager().setAudioPlayoutVolume(70);
-                writeCallFunctionLog("setAudioPlayoutVolume volume=70");
+                writeCallBackLog("setAudioPlayoutVolume volume=70");
             }
         });
     }
@@ -375,7 +404,7 @@ public class MainActivity extends TCCCBaseActivity {
         if(!isShowLogView)
             return;
         binding.tvTcccLog.setVisibility(View.VISIBLE);
-        String log ="TCCC日志窗口"+"\r\n";
+        String log ="TCCC Logs:"+"\r\n";
         for (int i=0;i<mLogList.size();i++){
             log+=mLogList.get(i)+"\r\n";
         }

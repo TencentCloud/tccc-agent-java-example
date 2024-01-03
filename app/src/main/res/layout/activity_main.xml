@@ -43,7 +43,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="输入用户ID"
+                            android:hint="@string/enterUserName"
                             android:inputType="textPersonName"
                             android:text="" />
                         <EditText
@@ -52,7 +52,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:ems="10"
-                            android:hint="用户密码"
+                            android:hint="@string/enterPassword"
                             android:inputType="textPassword" />
 
                     </LinearLayout>
@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="获取token"
+                            android:text="@string/genTestToken"
                             />
 
                         <Button
@@ -83,7 +83,17 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="登录"
+                            android:text="@string/login"
+                            />
+                        <Button
+                            android:id="@+id/btnCheckLogin"
+                            android:textAllCaps="false"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="5dp"
+                            android:text="@string/checkLogin"
                             />
                         <Button
                             android:id="@+id/btnLogout"
@@ -93,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="退出"
+                            android:text="@string/logout"
                             />
 
                     </LinearLayout>
@@ -112,7 +122,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:ems="10"
-                            android:hint="输入呼叫UserId"
+                            android:hint="@string/enterCallUser"
                             android:inputType="text"
                             android:minHeight="48dp" />
                     </LinearLayout>
@@ -132,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="呼叫"
+                            android:text="@string/call"
                             />
                         <Button
                             android:id="@+id/btnEnd"
@@ -142,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="挂断"
+                            android:text="@string/hangUp"
                             />
 
                     </LinearLayout>
@@ -161,7 +171,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="听筒/扬声器"
+                            android:text="@string/MicrophoneOrSpeaker"
                             />
                         <Button
                             android:id="@+id/btnMute"
@@ -171,7 +181,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="静音"
+                            android:text="@string/mute"
                             />
                         <Button
                             android:id="@+id/btnUnMute"
@@ -181,7 +191,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="取消静音"
+                            android:text="@string/unMute"
                             />
                     </LinearLayout>
 
@@ -200,7 +210,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="获取音量"
+                            android:text="@string/GetVolume"
                             />
                         <Button
                             android:id="@+id/btnSetPlayoutVolume"
@@ -210,7 +220,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="设置音量"
+                            android:text="@string/SetVolume"
                             />
                         <Button
                             android:id="@+id/btnClearLog"
@@ -220,7 +230,7 @@
                             android:layout_gravity="center_horizontal"
                             android:padding="5dp"
                             android:layout_marginLeft="5dp"
-                            android:text="清除日志"
+                            android:text="@string/ClearLogs"
                             />
                     </LinearLayout>
 

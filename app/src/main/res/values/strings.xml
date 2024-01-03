@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TCCC Agent Demo</string>
+    <string name="enterUserName">please enter user name</string>
+    <string name="enterPassword">please enter token(Click the Get Token button)</string>
+    <string name="enterCallUser">please enter the number you want to call</string>
+    <string name="genTestToken">Get Token</string>
+    <string name="login">Login</string>
+    <string name="checkLogin">Check Login</string>
+    <string name="logout">Logout</string>
+    <string name="call">Call</string>
+    <string name="hangUp">Hang Up</string>
+    <string name="MicrophoneOrSpeaker">Microphone/Speaker</string>
+    <string name="mute">Mute</string>
+    <string name="unMute">Unmute</string>
+    <string name="GetVolume">Get Volume</string>
+    <string name="SetVolume">Set Volume</string>
+    <string name="ClearLogs">Clear Logs</string>
+    <string name="answer">Answer</string>
+    <string name="reject">Reject</string>
+    <string name="IncomingCall">Incoming Call</string>
+    <string name="IncomingCallFromXX">Incoming call from %s, please answer</string>
 </resources>
